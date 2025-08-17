@@ -35,8 +35,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password, rememberMe) => {
-    console.log('--- FRONTEND LOG: Attempting to log in with email:', email);
-      const response = await apiService.post('/api/auth/login', { email, password });
+    const response = await apiService.post('/api/auth/login', { email, password });
     const { token, user: userData } = response.data;
 
     const storage = rememberMe ? localStorage : sessionStorage;
