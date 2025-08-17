@@ -3,31 +3,24 @@
   "builds": [
     {
       "src": "backend/server.js",
-      "use": "@vercel/node",
-      "config": { "project": "backend", "workspaces": ["backend"] }
+      "use": "@vercel/node"
     },
     {
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
-      "config": { "project": "frontend", "workspaces": ["frontend"], "buildCommand": "yarn build", "outputDirectory": "build" }
+      "config": {
+        "buildCommand": "yarn build",
+        "outputDirectory": "build"
+      }
     }
   ],
   "routes": [
     {
-      "src": "/static/(.*)",
-      "dest": "/frontend/build/static/$1"
-    },
-    {
-      "src": "/manifest.json",
-      "dest": "/frontend/build/manifest.json"
-    },
-    {
-      "src": "/favicon.ico",
-      "dest": "/frontend/build/favicon.ico"
-    },
-    {
       "src": "/api/(.*)",
-      "dest": "backend/server.js"
+      "dest": "/backend/server.js"
+    },
+    {
+      "handle": "filesystem"
     },
     {
       "src": "/(.*)",
