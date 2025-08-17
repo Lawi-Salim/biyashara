@@ -2,8 +2,9 @@
   "version": 2,
   "builds": [
     {
-      "src": "backend/server.js",
-      "use": "@vercel/node"
+      "src": "backend/package.json",
+      "use": "@vercel/node",
+      "config": { "maxLambdaSize": "50mb" }
     },
     {
       "src": "frontend/package.json",
@@ -15,25 +16,10 @@
     }
   ],
   "routes": [
-    {
-      "src": "/static/(.*)",
-      "dest": "/frontend/build/static/$1"
-    },
-    {
-      "src": "/manifest.json",
-      "dest": "/frontend/build/manifest.json"
-    },
-    {
-      "src": "/favicon.ico",
-      "dest": "/frontend/build/favicon.ico"
-    },
-    {
-      "src": "/api/(.*)",
-      "dest": "backend/server.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/frontend/build/index.html"
-    }
+    { "src": "/api/(.*)", "dest": "backend/server.js" },
+    { "src": "/static/(.*)", "dest": "/frontend/build/static/$1" },
+    { "src": "/manifest.json", "dest": "/frontend/build/manifest.json" },
+    { "src": "/favicon.ico", "dest": "/frontend/build/favicon.ico" },
+    { "src": "/(.*)", "dest": "/frontend/build/index.html" }
   ]
 }

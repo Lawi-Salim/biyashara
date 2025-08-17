@@ -47,21 +47,23 @@ app.use((error, req, res, next) => {
 // Configuration du port
 const PORT = process.env.PORT || 5000;
 
-// Démarrage du serveur
-const startTime = Date.now();
+// Démarrage du serveur uniquement si ce n'est pas en production (Vercel s'en occupe)
+if (process.env.NODE_ENV !== 'production') {
+  const startTime = Date.now();
 
-app.listen(PORT, () => {
-    const endTime = Date.now();
-    const duration = endTime - startTime;
-    const minutes = Math.floor(duration / 60000);
-    const seconds = ((duration % 60000) / 1000).toFixed(0);
-    const formattedTime = minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;
-    const now = new Date();
-    const timeString = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-    
-    console.log(`✅ Serveur prêt et fonctionnel sur le port ${PORT}`);
-    console.log(`🚀 Démarrage en ${formattedTime} | En cours à ${timeString}`);
-    console.log(`Environnement: ${process.env.NODE_ENV || 'development'}`);
-  });
+  app.listen(PORT, () => {
+      const endTime = Date.now();
+      const duration = endTime - startTime;
+      const minutes = Math.floor(duration / 60000);
+      const seconds = ((duration % 60000) / 1000).toFixed(0);
+      const formattedTime = minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;
+      const now = new Date();
+      const timeString = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      
+      console.log(`✅ Serveur prêt et fonctionnel sur le port ${PORT}`);
+      console.log(`🚀 Démarrage en ${formattedTime} | En cours à ${timeString}`);
+      console.log(`Environnement: ${process.env.NODE_ENV || 'development'}`);
+    });
+}
 
 module.exports = app;
