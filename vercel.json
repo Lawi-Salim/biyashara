@@ -3,15 +3,13 @@
   "builds": [
     {
       "src": "backend/server.js",
-      "use": "@vercel/node"
+      "use": "@vercel/node",
+      "config": { "project": "backend", "workspaces": ["backend"] }
     },
     {
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
-      "config": {
-        "buildCommand": "yarn build",
-        "outputDirectory": "build"
-      }
+      "config": { "project": "frontend", "workspaces": ["frontend"], "buildCommand": "yarn build", "outputDirectory": "build" }
     }
   ],
   "routes": [
