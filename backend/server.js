@@ -1,13 +1,26 @@
 console.log('--- VERCEL LOG: Backend server.js execution started ---');
+console.log('--- VERCEL LOG: Node version:', process.version);
+console.log('--- VERCEL LOG: Environment:', process.env.NODE_ENV);
+console.log('--- VERCEL LOG: Current directory:', __dirname);
+
 require('dotenv').config();
+
+console.log('--- VERCEL LOG: Dotenv loaded ---');
+console.log('--- VERCEL LOG: DATABASE_URL exists:', !!process.env.DATABASE_URL);
+console.log('--- VERCEL LOG: JWT_SECRET exists:', !!process.env.JWT_SECRET);
+
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 
+console.log('--- VERCEL LOG: Express and middleware imported ---');
+
 // Importation des routes
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
+
+console.log('--- VERCEL LOG: Routes imported ---');
 
 // Variable pour s'assurer que l'admin n'est créé qu'une seule fois par session
 let adminCreationAttempted = false;
