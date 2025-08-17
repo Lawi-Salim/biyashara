@@ -40,9 +40,10 @@ module.exports = {
       ssl: {
         require: true,
         rejectUnauthorized: false
-      },
-      family: 4 // Forcer l'utilisation de l'IPv4
+      }
     },
+    native: false, // S'assure que `pg-native` n'est pas utilisé
+    family: 4, // Forcer l'utilisation de l'IPv4 au niveau supérieur
     logging: false,
     pool: {
       max: 5,

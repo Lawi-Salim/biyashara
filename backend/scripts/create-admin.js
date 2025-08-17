@@ -43,9 +43,10 @@ const createAdmin = async () => {
         ssl: {
           require: true,
           rejectUnauthorized: false
-        },
-        family: 4 // Forcer l'utilisation de l'IPv4
+        }
       },
+      native: false, // S'assure que `pg-native` n'est pas utilisé
+      family: 4, // Forcer l'utilisation de l'IPv4 au niveau supérieur
       logging: false,
       pool: {
         max: 1, // Limiter à 1 connexion pour le script
