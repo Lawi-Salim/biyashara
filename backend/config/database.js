@@ -40,7 +40,8 @@ module.exports = {
       ssl: {
         require: true,
         rejectUnauthorized: false
-      }
+      },
+      family: 4 // Forcer l'utilisation de l'IPv4
     },
     logging: false,
     pool: {
