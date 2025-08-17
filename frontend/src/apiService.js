@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Crée une instance d'Axios avec une configuration de base
 const apiService = axios.create({
-  baseURL: process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000',
+  baseURL: process.env.NODE_ENV === 'production' ? 'https://biyashara.vercel.app' : 'http://localhost:5000',
   headers: {
     'Content-Type': 'application/json',
   },
