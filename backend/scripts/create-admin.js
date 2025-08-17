@@ -1,9 +1,15 @@
 console.log('--- EXECUTING CREATE-ADMIN SCRIPT ---');
 require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') });
 
-// S'exécuter uniquement en production
-if (process.env.NODE_ENV !== 'production') {
+// S'exécuter si on est en production (vérifié par la présence de DATABASE_URL)
+// ou si on est sur Vercel (vérifié par la présence de VERCEL_URL)
+const isProduction = process.env.DATABASE_URL || process.env.VERCEL_URL;
+
+if (!isProduction) {
   console.log('Script create-admin ignoré en développement. Il ne s\'exécute qu\'en production.');
+  console.log('NODE_ENV:', process.env.NODE_ENV);
+  console.log('DATABASE_URL exists:', !!process.env.DATABASE_URL);
+  console.log('VERCEL_URL exists:', !!process.env.VERCEL_URL);
   process.exit(0);
 }
 
@@ -19,6 +25,7 @@ const createAdmin = async () => {
   try {
     console.log('NODE_ENV:', process.env.NODE_ENV);
     console.log('DATABASE_URL exists:', !!process.env.DATABASE_URL);
+    console.log('VERCEL_URL exists:', !!process.env.VERCEL_URL);
     
     await sequelize.authenticate();
     console.log('Connexion à la base de données établie avec succès.');
