@@ -17,8 +17,11 @@ if (!isProduction) {
 // En production, utiliser directement les variables d'environnement de Vercel
 console.log('Mode production détecté - utilisation des variables d\'environnement Vercel');
 
+// Forcer l'environnement de production
+process.env.NODE_ENV = 'production';
+
 const bcrypt = require('bcryptjs');
-const { sequelize } = require('../database');
+const { Sequelize } = require('sequelize');
 const Utilisateur = require('../models/Utilisateur');
 
 const ADMIN_EMAIL = 'wahilamwamtsa@gmail.com';
@@ -26,10 +29,24 @@ const ADMIN_NAME = 'Lawi Salim';
 const ADMIN_PASSWORD = '123456';
 
 const createAdmin = async () => {
+  let sequelize;
+  
   try {
     console.log('NODE_ENV:', process.env.NODE_ENV);
     console.log('DATABASE_URL exists:', !!process.env.DATABASE_URL);
     console.log('VERCEL_URL exists:', !!process.env.VERCEL_URL);
+    
+    // Créer une connexion Sequelize directe pour la production
+    sequelize = new Sequelize(process.env.DATABASE_URL, {
+      dialect: 'postgres',
+      dialectOptions: {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false
+        }
+      },
+      logging: false
+    });
     
     await sequelize.authenticate();
     console.log('Connexion à la base de données établie avec succès.');
@@ -55,8 +72,10 @@ const createAdmin = async () => {
   } catch (error) {
     console.error('❌ Impossible de créer l\'utilisateur administrateur:', error);
   } finally {
-    await sequelize.close();
-    console.log('Connexion à la base de données fermée.');
+    if (sequelize) {
+      await sequelize.close();
+      console.log('Connexion à la base de données fermée.');
+    }
   }
 };
 
