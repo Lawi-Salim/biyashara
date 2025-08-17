@@ -1,0 +1,17 @@
+{
+  "short_name": "Biyashara",
+  "name": "Biyashara - Baraza la torengue",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#2563eb",
+  "background_color": "#ffffff",
+  "description": "Plateforme de marché facilitant la vente entre le commerçant et l'intéressé.",
+  "orientation": "portrait"
+}

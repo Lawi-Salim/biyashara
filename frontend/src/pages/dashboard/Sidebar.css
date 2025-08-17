@@ -1,0 +1,76 @@
+/* === Sidebar Layout === */
+.sidebar {
+  width: 260px;
+  background-color: var(--accent-primary, var(--primary-500));
+  color: var(--gray-200); /* Couleur de base pour les icônes */
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 1.5rem 0 0;
+}
+
+/* === Sidebar Header (Logo) === */
+.sidebar-header {
+  padding: 0 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sidebar-header img {
+  height: 32px;
+}
+
+.sidebar-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff; /* Titre toujours blanc */
+  margin: 0;
+}
+
+/* === Navigation Menu === */
+.sidebar-nav {
+  flex-grow: 1;
+}
+
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-nav a {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.875rem 1.5rem;
+  color: white; /* Texte des liens en gris clair */
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.2s, color 0.2s;
+  border-radius: 5px;
+  margin: 5px 8px;
+}
+
+.sidebar-nav a:hover {
+  background-color: var(--accent-primary-hover, rgba(243, 243, 243, 0.342));
+  color: #ffffff; /* Texte des liens en blanc au survol */
+  text-decoration: none;
+}
+
+.sidebar-nav a.active {
+  background-color: var(--bg-secondary, white);
+  color: var(--accent-primary, var(--primary-500));
+}
+
+/* === Sidebar Footer (User/Logout) === */
+.sidebar-footer {
+  padding: 1rem 1.25rem;
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--border-color, rgba(255, 255, 255, 0.712));
+}
+

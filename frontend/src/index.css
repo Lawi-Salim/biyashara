@@ -1,0 +1,429 @@
+/* Import de la police Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Variables CSS globales et styles de base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+  
+html {
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Styles de base */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+  background-color: #f9fafb;
+  color: #1f2937;
+  line-height: 1.5;
+}
+
+/* Variables CSS pour le mode light */
+:root {
+  --font-family: 'Poppins', system-ui, sans-serif;
+
+  /* Couleurs de catégories */
+  --color-cat-electronique: #4F46E5;
+  --color-cat-mode: #DB2777;
+  --color-cat-maison: #059669;
+  --color-cat-beaute: #EC4899;
+  --color-cat-sport: #3B82F6;
+  --color-cat-default: #64748B;
+  --color-sale: #EF4444;
+  --color-new: #10B981;
+  
+  /* Couleurs primaires */
+  --primary-50: #eff6ff;
+  --primary-100: #dbeafe;
+  --primary-200: #bfdbfe;
+  --primary-300: #93c5fd;
+  --primary-400: #60a5fa;
+  --primary-500: #3b82f6;
+  --primary-600: #2563eb;
+  --primary-700: #1d4ed8;
+  --primary-800: #1e40af;
+  --primary-900: #1e3a8a;
+  
+  /* Nuances de gris */
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+
+  /* Nuances rouges */
+  --red-50: #fef2f2;
+  --red-100: #fee2e2;
+  --red-200: #fecaca;
+  --red-300: #fca5a5;
+  --red-400: #f87171;
+  --red-500: #ef4444;
+  --red-600: #dc2626;
+  --red-700: #b91c1c;
+  --red-800: #991b1b;
+  --red-900: #7f1d1d;
+  
+  /* Nuances verts */
+  --green-50: #f0fdf4;
+  --green-100: #dcfce7;
+  --green-200: #bbf7d0;
+  --green-300: #86efac;
+  --green-400: #4ade80;
+  --green-500: #22c55e;
+  --green-600: #16a34a;
+  --green-700: #15803d;
+  --green-800: #166534;
+  --green-900: #14532d;
+  
+  /* Autres couleurs utiles */
+  --red-500: #ef4444;
+  --green-500: #22c55e;
+  --yellow-500: #f59e0b;
+  --blue-500: #3b82f6;
+  --indigo-500: #6366f1;
+  --purple-500: #a855f7;
+  --pink-500: #ec4899;
+  
+  /* Ombres */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  --shadow-outline: 0 0 0 3px rgba(66, 153, 225, 0.5);
+  --shadow-none: none;
+
+  /* Couleurs sémantiques et de thème */
+  --bg-primary: var(--gray-50);
+  --bg-secondary: #ffffff;
+  --text-primary: var(--gray-900);
+  --text-secondary: var(--gray-500);
+  --border-color: var(--gray-200);
+  --primary-color: var(--primary-600);
+  --success-color: var(--green-500);
+  --danger-color: var(--red-500);
+
+  /* Font size pour toutes les balises nécessitant le font-size */
+  --h1-size: 1rem;
+  --h2-size: 1.75rem;
+  --h3-size: 1.375rem;
+  --h4-size: 1.125rem;
+  --h5-size: 1rem;
+  --h6-size: 0.9rem;
+  --p-size: 14px;
+  --button-size: 12px;
+  --link-size: 1rem;
+  --icon-size: 15px;
+}
+
+/* Styles de base */
+body {
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--gray-900);
+  background-color: #ffffff;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Styles pour les liens */
+a {
+  color: var(--primary-600);
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+  font-size: var(--link-size);
+}
+
+a:hover {
+  color: var(--primary-700);
+  text-decoration: underline;
+}
+
+/* Styles pour les boutons */
+button {
+  cursor: pointer;
+  font-family: inherit;
+  font-size: var(--button-size);
+  font-weight: 500;
+  line-height: 1.5;
+  border: none;
+  border-radius: 0.375rem;
+  transition: all 0.2s ease-in-out;
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+}
+
+/* Styles pour les titres */
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--text-primary, var(--gray-900));
+}
+
+h1 { font-size: var(--h1-size); }
+h2 { font-size: var(--h2-size); }
+h3 { font-size: var(--h3-size); }
+h4 { font-size: var(--h4-size); }
+h5 { font-size: var(--h5-size); }
+h6 { font-size: var(--h6-size); }
+
+/* Styles pour les paragraphes */
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  line-height: 1.7;
+  color: var(--gray-700);
+}
+
+/* Styles pour les listes */
+ul, ol {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  padding-left: 2rem;
+}
+
+/* Styles pour les images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Styles pour les conteneurs */
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+/* Boutons */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background-color: var(--primary-600);
+  color: white;
+  border: 2px solid var(--primary-600);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-700);
+  border-color: var(--primary-700);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: white;
+  border: 2px solid white;
+}
+
+.btn-outline:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+.btn-light {
+  background-color: white;
+  color: var(--primary-700);
+  border: 2px solid white;
+}
+
+.btn-light:hover {
+  background-color: var(--primary-50);
+  border-color: var(--primary-50);
+  color: var(--primary-700);
+}
+
+.btn-text {
+  color: var(--primary-600);
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Styles responsifs globaux */
+@media (max-width: 768px) {
+  .btn {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Ajoutez ici les styles responsifs globaux si nécessaire */
+}
+
+/* Variables CSS pour le mode sombre */
+.dark {
+  /* Couleurs de fond et de texte */
+  --bg-primary: var(--gray-900); /* Fond principal */
+  --bg-secondary: var(--gray-800); /* Fond des cartes, modales, etc. */
+  --text-primary: var(--gray-100); /* Texte principal */
+  --text-secondary: var(--gray-400); /* Texte secondaire, placeholders */
+  --border-color: var(--gray-700); /* Bordures */
+
+  /* Couleurs d'accentuation */
+  --accent-primary: var(--primary-500);
+  --accent-primary-hover: var(--primary-400);
+
+  /* Couleurs sémantiques */
+  --color-success: var(--green-500);
+  --color-danger: var(--red-500);
+  --color-warning: var(--yellow-500);
+
+  /* Styles de base pour le body en mode sombre */
+  --body-bg: var(--gray-900);
+  --body-color: var(--text-primary);
+
+  /* Couleurs spécifiques UserMenu */
+  --sidebar-text-color: var(--gray-100);
+  --color-danger-hover-bg: var(--red-900);
+  --color-danger-hover-text: var(--red-300);
+
+  /* Fonds translucides */
+  --bg-secondary-translucent: rgba(0, 0, 0, 0.2);
+  --bg-secondary-translucent-hover: rgba(0, 0, 0, 0.3);
+}
+
+/* Styles spécifiques au mode sombre */
+.dark body {
+  background-color: var(--body-bg);
+  color: var(--body-color);
+}
+
+.dark .dashboard-layout {
+  background-color: var(--bg-primary);
+}
+
+.dark .dashboard-card, .dark .empty-card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  box-shadow: none;
+}
+
+.dark .dashboard-header {
+  color: var(--text-primary);
+  border-bottom-color: var(--accent-primary);
+}
+
+.dark .dashboard-table thead tr {
+  background-color: var(--gray-800);
+}
+
+.dark .dashboard-table th {
+  color: var(--text-secondary);
+}
+
+.dark .dashboard-table tbody tr {
+  border-bottom-color: var(--border-color);
+}
+
+.dark .dashboard-table tbody tr:hover {
+  background-color: var(--gray-700);
+}
+
+.dark .sidebar {
+  background-color: var(--gray-800);
+  border-right: 1px solid var(--border-color);
+}
+
+.dark .sidebar-nav a {
+  color: var(--text-primary);
+}
+
+.dark .sidebar-nav a:hover {
+  background-color: var(--gray-700);
+}
+
+.dark .sidebar-nav a.active {
+  background-color: var(--accent-primary);
+  color: white;
+}
+
+.dark .sidebar-header h1 {
+  color: white;
+}
+
+.dark .sidebar-footer {
+    border-top-color: var(--border-color);
+}
+
+.dark .client-table {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.dark .client-table th {
+    background-color: var(--gray-800);
+    color: var(--text-secondary);
+    border-bottom-color: var(--border-color);
+}
+
+.dark .client-table tbody tr:hover {
+    background-color: var(--gray-700);
+}

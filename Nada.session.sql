@@ -1,0 +1,17 @@
+\d Boutiques;
+\d Utilisateurs;
+\d Vendeurs;
+\d Clients;
+\d Categories;
+\d Unites;
+\d Produits;
+\d Commandes;
+\d DetailCommandes;
+\d Ventes;
+\d Factures;
+\d Paiements;
+\d Livraisons;
+\d Notifications;
+\d TypesNotifications;
+\d DevenirVendeurs;
+\d EtatStatuts;
