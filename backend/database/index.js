@@ -1,8 +1,9 @@
 const { Sequelize } = require('sequelize');
 const config = require('../config/database');
 
-// Sélection de l'environnement (par défaut: development)
-const env = process.env.NODE_ENV || 'development';
+// Sélection de l'environnement
+const isProduction = process.env.DATABASE_URL || process.env.VERCEL_URL;
+const env = isProduction ? 'production' : 'development';
 const dbConfig = config[env];
 
 // Initialisation de la connexion Sequelize

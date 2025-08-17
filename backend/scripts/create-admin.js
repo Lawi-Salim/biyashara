@@ -1,17 +1,21 @@
 console.log('--- EXECUTING CREATE-ADMIN SCRIPT ---');
-require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') });
 
 // S'exécuter si on est en production (vérifié par la présence de DATABASE_URL)
 // ou si on est sur Vercel (vérifié par la présence de VERCEL_URL)
 const isProduction = process.env.DATABASE_URL || process.env.VERCEL_URL;
 
+// Charger le fichier .env seulement en développement
 if (!isProduction) {
+  require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') });
   console.log('Script create-admin ignoré en développement. Il ne s\'exécute qu\'en production.');
   console.log('NODE_ENV:', process.env.NODE_ENV);
   console.log('DATABASE_URL exists:', !!process.env.DATABASE_URL);
   console.log('VERCEL_URL exists:', !!process.env.VERCEL_URL);
   process.exit(0);
 }
+
+// En production, utiliser directement les variables d'environnement de Vercel
+console.log('Mode production détecté - utilisation des variables d\'environnement Vercel');
 
 const bcrypt = require('bcryptjs');
 const { sequelize } = require('../database');
