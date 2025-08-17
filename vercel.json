@@ -2,24 +2,23 @@
   "version": 2,
   "builds": [
     {
-      "src": "backend/package.json",
+      "src": "backend/server.js",
       "use": "@vercel/node",
-      "config": { "maxLambdaSize": "50mb" }
+      "config": {
+        "includeFiles": ["backend/**"]
+      }
     },
     {
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "buildCommand": "yarn build",
-        "outputDirectory": "build"
+        "buildCommand": "cd frontend && yarn && yarn build",
+        "outputDirectory": "frontend/build"
       }
     }
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "/backend/server.js" },
-    { "src": "/static/(.*)", "dest": "/frontend/build/static/$1" },
-    { "src": "/manifest.json", "dest": "/frontend/build/manifest.json" },
-    { "src": "/favicon.ico", "dest": "/frontend/build/favicon.ico" },
     { "src": "/(.*)", "dest": "/frontend/build/index.html" }
   ]
 }
