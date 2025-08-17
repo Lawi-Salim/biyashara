@@ -16,11 +16,13 @@ let adminCreationAttempted = false;
 const createDefaultAdmin = async () => {
   // Éviter les appels multiples
   if (adminCreationAttempted) {
+    console.log('--- VERCEL LOG: Admin creation already attempted ---');
     return;
   }
   adminCreationAttempted = true;
 
   try {
+    console.log('--- VERCEL LOG: Starting admin creation process ---');
     const bcrypt = require('bcryptjs');
     const { Utilisateur } = require('./models');
     
@@ -28,6 +30,7 @@ const createDefaultAdmin = async () => {
     const ADMIN_NAME = 'Lawi Salim';
     const ADMIN_PASSWORD = '123456';
 
+    console.log('--- VERCEL LOG: Checking if admin exists ---');
     // Vérifier si l'admin existe déjà
     const existingAdmin = await Utilisateur.findOne({ where: { email: ADMIN_EMAIL } });
 
@@ -36,6 +39,7 @@ const createDefaultAdmin = async () => {
       return;
     }
 
+    console.log('--- VERCEL LOG: Creating new admin user ---');
     // Hacher le mot de passe
     const hashedPassword = await bcrypt.hash(ADMIN_PASSWORD, 10);
 
@@ -62,6 +66,8 @@ const createDefaultAdmin = async () => {
 // Initialisation de l'application Express
 const app = express();
 
+console.log('--- VERCEL LOG: Express app initialized ---');
+
 // Middleware
 app.use(cors());
 app.use(helmet());
@@ -69,17 +75,23 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+console.log('--- VERCEL LOG: Middleware configured ---');
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 
+console.log('--- VERCEL LOG: Routes configured ---');
+
 // Route de test
 app.get('/', (req, res) => {
+  console.log('--- VERCEL LOG: Root route accessed ---');
   res.json({ message: 'Bienvenue sur l\'API Biyashara' });
 });
 
 // Gestion des erreurs 404
 app.use((req, res, next) => {
+  console.log('--- VERCEL LOG: 404 error for route:', req.path);
   const error = new Error('Ressource non trouvée');
   error.status = 404;
   next(error);
@@ -87,6 +99,7 @@ app.use((req, res, next) => {
 
 // Gestionnaire d'erreurs global
 app.use((error, req, res, next) => {
+  console.log('--- VERCEL LOG: Global error handler:', error.message);
   res.status(error.status || 500);
   res.json({
     error: {
@@ -97,6 +110,8 @@ app.use((error, req, res, next) => {
 
 // Configuration du port
 const PORT = process.env.PORT || 5000;
+
+console.log('--- VERCEL LOG: Environment:', process.env.NODE_ENV);
 
 // Démarrage du serveur uniquement si ce n'est pas en production (Vercel s'en occupe)
 if (process.env.NODE_ENV !== 'production') {
@@ -119,8 +134,11 @@ if (process.env.NODE_ENV !== 'production') {
       await createDefaultAdmin();
     });
 } else {
+  console.log('--- VERCEL LOG: Production environment detected, creating admin ---');
   // En production (Vercel), créer l'admin par défaut (une seule fois)
   createDefaultAdmin();
 }
+
+console.log('--- VERCEL LOG: Server.js module exported ---');
 
 module.exports = app;
