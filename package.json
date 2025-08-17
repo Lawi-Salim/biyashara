@@ -1,0 +1,13 @@
+{
+  "name": "biyashara",
+  "version": "1.0.0",
+  "description": "Application Biyashara",
+  "scripts": {
+    "dev": "echo 'Development mode'",
+    "build": "echo 'Build completed'",
+    "start": "echo 'Start completed'"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
