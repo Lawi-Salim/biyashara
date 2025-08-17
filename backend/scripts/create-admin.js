@@ -36,7 +36,7 @@ const createAdmin = async () => {
     console.log('DATABASE_URL exists:', !!process.env.DATABASE_URL);
     console.log('VERCEL_URL exists:', !!process.env.VERCEL_URL);
     
-    // Créer une connexion Sequelize directe pour la production
+    // Créer une connexion Sequelize avec le Session Pooler
     sequelize = new Sequelize(process.env.DATABASE_URL, {
       dialect: 'postgres',
       dialectOptions: {
@@ -45,11 +45,17 @@ const createAdmin = async () => {
           rejectUnauthorized: false
         }
       },
-      logging: false
+      logging: false,
+      pool: {
+        max: 1, // Limiter à 1 connexion pour le script
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+      }
     });
     
     await sequelize.authenticate();
-    console.log('Connexion à la base de données établie avec succès.');
+    console.log('Connexion à la base de données établie avec succès via Session Pooler.');
 
     const existingAdmin = await Utilisateur.findOne({ where: { email: ADMIN_EMAIL } });
 
