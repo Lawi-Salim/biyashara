@@ -48,13 +48,12 @@ app.use((error, req, res, next) => {
   });
 });
 
-// Configuration du port
-const PORT = process.env.PORT || 5000;
+// Démarrage du serveur uniquement en local (pas sur Vercel)
+if (!process.env.VERCEL) {
+  const PORT = process.env.PORT || 5000;
 
-// Démarrage du serveur
-const startTime = Date.now();
-
-app.listen(PORT, () => {
+  app.listen(PORT, () => {
+    const startTime = Date.now();
     const endTime = Date.now();
     const duration = endTime - startTime;
     const minutes = Math.floor(duration / 60000);
@@ -63,9 +62,9 @@ app.listen(PORT, () => {
     const now = new Date();
     const timeString = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
     
-    console.log(`✅ Serveur prêt et fonctionnel sur le port ${PORT}`);
-    console.log(`🚀 Démarrage en ${formattedTime} | En cours à ${timeString}`);
-    console.log(`Environnement: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`[${timeString}] Serveur démarré sur le port ${PORT} en ${formattedTime}`);
   });
+}
 
+// Exporter l'application pour Vercel
 module.exports = app;

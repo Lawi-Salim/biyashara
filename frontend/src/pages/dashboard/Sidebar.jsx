@@ -1,11 +1,9 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import UserAvatar from './UserAvatar'; // The user created this but didn't import it
 import UserMenu from './UserMenu';
 import './Sidebar.css';
-import { FiGrid, FiUsers, FiBox, FiShoppingBag, FiSettings } from 'react-icons/fi';
-import { FaTachometerAlt, FaUsers as FaUsersIcon, FaBoxOpen, FaShoppingCart, FaCog, FaSignOutAlt, FaListAlt, FaTags } from 'react-icons/fa';
+import { FiGrid, FiUsers, FiBox, FiShoppingBag } from 'react-icons/fi';
 
 const adminLinks = [
   { path: '/admin/dashboard', icon: <FiGrid />, label: 'Tableau de bord', end: true },
@@ -40,7 +38,7 @@ const navLinks = {
 };
 
 const Sidebar = () => {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const links = user ? navLinks[user.role] : [];
 
   return (

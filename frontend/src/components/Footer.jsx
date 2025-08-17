@@ -18,10 +18,10 @@ const Footer = () => {
           </div>
           <p>La marketplace qui connecte vendeurs et acheteurs en toute simplicité.</p>
           <div className="social-links">
-            <a href="#" aria-label="Facebook">📘</a>
-            <a href="#" aria-label="Twitter">🐦</a>
-            <a href="#" aria-label="Instagram">📷</a>
-            <a href="#" aria-label="LinkedIn">💼</a>
+            <button type="button" aria-label="Facebook">📘</button>
+            <button type="button" aria-label="Twitter">🐦</button>
+            <button type="button" aria-label="Instagram">📷</button>
+            <button type="button" aria-label="LinkedIn">💼</button>
           </div>
         </div>
 

@@ -12,7 +12,6 @@ import './Dashboard.css';
 
 const AdminDashboard = () => {
   const location = useLocation();
-  const { user } = useAuth();
   const { addToast } = useToast();
   const [users, setUsers] = useState([]);
   const [sellerRequests, setSellerRequests] = useState([]);
@@ -38,7 +37,7 @@ const AdminDashboard = () => {
     };
 
     fetchData();
-  }, []);
+  }, [addToast]);
 
   const handleRequest = async (requestId, action) => {
     try {

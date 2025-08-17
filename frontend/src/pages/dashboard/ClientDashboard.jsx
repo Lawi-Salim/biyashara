@@ -1,13 +1,11 @@
 import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
 import DashboardLayout from './DashboardLayout';
 import NoDataFound from '../../components/common/NoDataFound';
 import './Dashboard.css';
 
 const ClientDashboard = () => {
   const location = useLocation();
-  const { user } = useAuth();
 
   return (
     <DashboardLayout>

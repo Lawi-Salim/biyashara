@@ -7,7 +7,6 @@ import './Dashboard.css';
 
 const VendeurDashboard = () => {
   const location = useLocation();
-  const { user } = useAuth();
 
   return (
     <DashboardLayout>
