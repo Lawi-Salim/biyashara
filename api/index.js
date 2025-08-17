@@ -1,6 +1,8 @@
 console.log('=== VERCEL API: index.js loaded ===');
 console.log('=== VERCEL API: Environment:', process.env.NODE_ENV);
 console.log('=== VERCEL API: Node version:', process.version);
+console.log('=== VERCEL API: Current directory:', __dirname);
+console.log('=== VERCEL API: Process ID:', process.pid);
 
 const express = require('express');
 const app = express();

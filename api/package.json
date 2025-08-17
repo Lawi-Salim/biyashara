@@ -1,7 +1,7 @@
 {
-  "name": "biyashara-api-test",
+  "name": "biyashara-api",
   "version": "1.0.0",
-  "main": "test.js",
+  "main": "index.js",
   "dependencies": {
     "express": "^4.18.2"
   }
