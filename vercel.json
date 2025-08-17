@@ -1,0 +1,46 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "backend/server.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "backend/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": ".",
+        "buildCommand": "yarn run seed:admin"
+      }
+    },
+    {
+      "src": "frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "build"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/backend/server.js"
+    },
+    {
+      "src": "/favicon.png",
+      "dest": "/frontend/public/favicon.png"
+    },
+    {
+      "src": "/favicon-black.png",
+      "dest": "/frontend/public/favicon-black.png"
+    },
+    {
+      "src": "/manifest.json",
+      "dest": "/frontend/public/manifest.json"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/frontend/public/index.html"
+    }
+  ]
+}
