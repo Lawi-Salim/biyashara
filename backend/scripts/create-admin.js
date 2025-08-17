@@ -1,3 +1,4 @@
+console.log('--- EXECUTING CREATE-ADMIN SCRIPT ---');
 require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') });
 const bcrypt = require('bcryptjs');
 const { sequelize } = require('../database');
