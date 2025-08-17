@@ -1,3 +1,4 @@
+require('dns').setDefaultResultOrder('ipv4first');
 console.log('--- EXECUTING CREATE-ADMIN SCRIPT ---');
 
 // S'exécuter si on est en production (vérifié par la présence de DATABASE_URL)
