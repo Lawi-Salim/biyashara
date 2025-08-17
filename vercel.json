@@ -19,6 +19,11 @@
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "/backend/server.js" },
-    { "src": "/(.*)", "dest": "/frontend/build/index.html" }
-  ]
+    { "src": "/(.*)", "dest": "/frontend/build/$1" }
+  ],
+  "functions": {
+    "backend/server.js": {
+      "maxDuration": 30
+    }
+  }
 }
