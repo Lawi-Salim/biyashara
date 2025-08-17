@@ -1,5 +1,12 @@
 console.log('--- EXECUTING CREATE-ADMIN SCRIPT ---');
 require('dotenv').config({ path: require('path').resolve(__dirname, '../.env') });
+
+// S'exécuter uniquement en production
+if (process.env.NODE_ENV !== 'production') {
+  console.log('Script create-admin ignoré en développement. Il ne s\'exécute qu\'en production.');
+  process.exit(0);
+}
+
 const bcrypt = require('bcryptjs');
 const { sequelize } = require('../database');
 const Utilisateur = require('../models/Utilisateur');
@@ -10,13 +17,16 @@ const ADMIN_PASSWORD = '123456';
 
 const createAdmin = async () => {
   try {
+    console.log('NODE_ENV:', process.env.NODE_ENV);
+    console.log('DATABASE_URL exists:', !!process.env.DATABASE_URL);
+    
     await sequelize.authenticate();
     console.log('Connexion à la base de données établie avec succès.');
 
     const existingAdmin = await Utilisateur.findOne({ where: { email: ADMIN_EMAIL } });
 
     if (existingAdmin) {
-      console.log('L\'utilisateur administrateur existe déjà.');
+      console.log('L\'utilisateur administrateur existe déjà. Création ignorée.');
       return;
     }
 
@@ -29,10 +39,10 @@ const createAdmin = async () => {
       role: 'admin',
     });
 
-    console.log('Utilisateur administrateur créé avec succès:', newAdmin.toJSON());
+    console.log('✅ Utilisateur administrateur créé avec succès en production:', newAdmin.toJSON());
 
   } catch (error) {
-    console.error('Impossible de créer l\'utilisateur administrateur:', error);
+    console.error('❌ Impossible de créer l\'utilisateur administrateur:', error);
   } finally {
     await sequelize.close();
     console.log('Connexion à la base de données fermée.');
