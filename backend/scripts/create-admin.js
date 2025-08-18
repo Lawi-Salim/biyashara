@@ -1,7 +1,5 @@
 console.log('--- EXECUTING CREATE-ADMIN SCRIPT ---');
 
-// S'exécuter si on est en production (vérifié par la présence de DATABASE_URL)
-// ou si on est sur Vercel (vérifié par la présence de VERCEL_URL)
 const isProduction = process.env.DATABASE_URL || process.env.VERCEL_URL;
 
 // Charger le fichier .env seulement en développement
