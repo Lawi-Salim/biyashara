@@ -15,9 +15,9 @@
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "/backend/server.js" },
-    { "src": "/static/(.*)", "dest": "/frontend/build/static/$1" },
-    { "src": "/favicon.ico", "dest": "/frontend/build/favicon.ico" },
-    { "src": "/manifest.json", "dest": "/frontend/build/manifest.json" },
-    { "src": "/(.*)", "dest": "/frontend" }
+    { "src": "/static/(.*)", "dest": "/frontend/$1" },
+    { "src": "/favicon.ico", "dest": "/frontend/favicon.ico" },
+    { "src": "/manifest.json", "dest": "/frontend/manifest.json" },
+    { "src": "/(.*)", "dest": "/frontend/index.html" }
   ]
 }
