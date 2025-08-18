@@ -1,4 +1,3 @@
-require('dns').setDefaultResultOrder('ipv4first');
 console.log('--- EXECUTING CREATE-ADMIN SCRIPT ---');
 
 // S'exécuter si on est en production (vérifié par la présence de DATABASE_URL)
@@ -47,7 +46,6 @@ const createAdmin = async () => {
         }
       },
       native: false, // S'assure que `pg-native` n'est pas utilisé
-      family: 4, // Forcer l'utilisation de l'IPv4 au niveau supérieur
       logging: false,
       pool: {
         max: 1, // Limiter à 1 connexion pour le script
