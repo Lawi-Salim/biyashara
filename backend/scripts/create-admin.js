@@ -34,8 +34,13 @@ const createAdmin = async () => {
     console.log('DATABASE_URL exists:', !!process.env.DATABASE_URL);
     console.log('VERCEL_URL exists:', !!process.env.VERCEL_URL);
     
-    // Créer une connexion Sequelize avec le Session Pooler
-    sequelize = new Sequelize(process.env.DATABASE_URL, {
+    // Configuration de la connexion Sequelize pour la production
+    const dbConfig = {
+      username: process.env.DB_USER_PROD,
+      password: process.env.DB_PASSWORD_PROD,
+      database: process.env.DB_NAME_PROD,
+      host: process.env.DB_HOST_PROD,
+      port: process.env.DB_PORT_PROD,
       dialect: 'postgres',
       dialectOptions: {
         ssl: {
@@ -43,15 +48,38 @@ const createAdmin = async () => {
           rejectUnauthorized: false
         }
       },
-      native: false, // S'assure que `pg-native` n'est pas utilisé
+      native: false,
       logging: false,
       pool: {
-        max: 1, // Limiter à 1 connexion pour le script
+        max: 1,
         min: 0,
         acquire: 30000,
         idle: 10000
       }
+    };
+
+    console.log('Tentative de connexion avec la configuration:', {
+      host: dbConfig.host,
+      port: dbConfig.port,
+      user: dbConfig.username,
+      database: dbConfig.database,
+      password_exists: !!dbConfig.password
     });
+
+    sequelize = new Sequelize(
+      dbConfig.database, 
+      dbConfig.username, 
+      dbConfig.password, 
+      {
+        host: dbConfig.host,
+        port: dbConfig.port,
+        dialect: dbConfig.dialect,
+        dialectOptions: dbConfig.dialectOptions,
+        native: dbConfig.native,
+        logging: dbConfig.logging,
+        pool: dbConfig.pool
+      }
+    );
     
     await sequelize.authenticate();
     console.log('Connexion à la base de données établie avec succès via Session Pooler.');
