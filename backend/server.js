@@ -22,9 +22,20 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/admin', adminRoutes);
+// Log minimal de chaque requête pour debug serverless
+app.use((req, res, next) => {
+  console.log(`[REQ] ${req.method} ${req.originalUrl}`);
+  next();
+});
+
+// Routes (supporte avec ou sans préfixe "/api" selon le routage Vercel)
+app.use(['/api/auth', '/auth'], authRoutes);
+app.use(['/api/admin', '/admin'], adminRoutes);
+
+// Endpoint de santé pour diagnostic
+app.get(['/api/health', '/health'], (req, res) => {
+  res.json({ ok: true, time: new Date().toISOString() });
+});
 
 // Route de test
 app.get('/', (req, res) => {
