@@ -1,0 +1,84 @@
+.dashboard-settings {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.dashboard-setting-avatar {
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard-setting-avatar strong {
+  display: block;
+  margin-top: 0.75rem;
+  color: var(--text-primary);
+  font-weight: 600;
+  text-align: center;
+}
+
+.dashboard-setting-content {
+  min-width: 0;
+}
+
+/* Grille des champs du formulaire */
+.settings-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 1.25rem;
+}
+
+.settings-field label {
+  display: block;
+  margin-bottom: 0.4rem;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.settings-field input {
+  width: 100%;
+  font-family: var(--font-family);
+}
+
+.settings-field.col-span-2 {
+  grid-column: span 2;
+}
+
+.settings-actions {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Modal de confirmation */
+.settings-confirm-modal h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+.settings-confirm-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  justify-content: flex-end;
+}
+
+@media (max-width: 900px) {
+  .dashboard-settings {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-field.col-span-2 {
+    grid-column: span 1;
+  }
+}

@@ -14,14 +14,25 @@ const auth = async (req, res, next) => {
     // Vérification du token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     
-    // Récupération de l'utilisateur
-    const user = await Utilisateur.findByPk(decoded.user.id);
+    // Récupération de l'utilisateur complet avec ses relations
+    const user = await Utilisateur.findByPk(decoded.user.id, {
+      include: [
+        {
+          model: require('../models').Vendeur,
+          as: 'vendeur'
+        },
+        {
+          model: require('../models').Client,
+          as: 'client'
+        }
+      ]
+    });
     
     if (!user) {
       return res.status(401).json({ message: 'Accès non autorisé - Utilisateur non trouvé' });
     }
 
-    // Ajout de l'utilisateur et du token à la requête
+    // Ajout de l'objet utilisateur complet et du token à la requête
     req.user = user;
     req.token = token;
     

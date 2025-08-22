@@ -1,0 +1,140 @@
+.image-upload-box {
+  border: 2px dashed var(--border-color);
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  background-color: var(--bg-primary);
+  min-height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.image-upload-box:hover {
+  background-color: var(--bg-secondary);
+  border-color: var(--primary-500);
+}
+
+.image-preview {
+  max-width: 100%;
+  max-height: 150px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.image-preview.banner-preview {
+  object-fit: contain;
+}
+
+.form-group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem; /* Adjust as needed */
+}
+
+.form-group-header label {
+  margin-bottom: 0; /* Remove default margin from label */
+}
+
+.gallery-link {
+  color: var(--primary-color);
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  transition: all 0.2s ease;
+}
+
+.gallery-link:hover {
+  color: var(--primary-color-dark);
+}
+
+.upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+}
+
+.request-change-box {
+  background-color: var(--bg-primary);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.request-change-box p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.request-change-box .btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.ticket {
+  border: 1px solid gray;
+}
+
+.ticket-status-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 5px solid;
+}
+
+.ticket-status-box.status-ouvert {
+  background-color: var(--warning-color-bg);
+  border-color: var(--warning-color);
+}
+
+.ticket-status-box.status-accepté {
+  background-color: var(--success-color-bg);
+  border-color: var(--success-color);
+}
+
+.ticket-status-box.status-refusé {
+  background-color: var(--error-color-bg);
+  border-color: var(--error-color);
+}
+
+.ticket-status-icon {
+  font-size: 2rem;
+  margin-top: 5px;
+}
+
+.status-ouvert .ticket-status-icon { color: var(--warning-color); }
+.status-accepté .ticket-status-icon { color: var(--success-color); }
+.status-refusé .ticket-status-icon { color: var(--error-color); }
+
+.ticket-status-content h6 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.ticket-status-content p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.ticket-status-content strong {
+  text-transform: capitalize;
+}

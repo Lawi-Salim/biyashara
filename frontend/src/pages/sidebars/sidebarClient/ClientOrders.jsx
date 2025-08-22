@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import apiService from '../../../apiService';
 import NoDataFound from '../../../components/common/NoDataFound';
+import ErrorDataFound from '../../../components/common/ErrorDataFound';
 import SpinnerLoading from '../../../components/SpinnerLoading';
 import Modal from '../../../components/Modal';
 import './styleClient.css';
@@ -8,6 +9,7 @@ import './styleClient.css';
 const ClientOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -18,6 +20,7 @@ const ClientOrders = () => {
         setOrders([]); // TODO: Remplacer par les données de l'API
       } catch (error) {
         console.error('Erreur lors de la récupération de vos commandes:', error);
+        setError('Impossible de charger vos commandes.');
       } finally {
         setLoading(false);
       }
@@ -36,6 +39,10 @@ const ClientOrders = () => {
               <SpinnerLoading size="large" color='var(--primary-500)' />
               <p>Chargement des commandes...</p>
             </div>
+          </div>
+        ) : error ? (
+          <div className="empty-card">
+            <ErrorDataFound message={error} />
           </div>
         ) : orders.length > 0 ? (
           <table className="client-table">

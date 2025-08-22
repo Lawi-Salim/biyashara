@@ -6,10 +6,13 @@ import UserAvatar from './UserAvatar';
 import './UserMenu.css';
 import { FiSun, FiMoon } from 'react-icons/fi';
 import { FaDesktop } from 'react-icons/fa';
+import Modal from '../../components/Modal';
+import UserProfile from './UserProfile';
 
 const UserMenu = () => {
   const { user, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const navigate = useNavigate();
   const menuRef = useRef(null);
@@ -20,9 +23,7 @@ const UserMenu = () => {
   };
 
   const toggleMenu = () => setIsOpen(!isOpen);
-
-  // Close menu when clicking outside
-
+  
   // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -52,8 +53,16 @@ const UserMenu = () => {
             <p className="dropdown-user-name">{user?.role}</p>
             <p className="dropdown-user-email">{user?.email}</p>
           </div>
-          <a href="/profil" className="dropdown-item">Mon Profil</a>
-          <a href="/settings" className="dropdown-item">Paramètres</a>
+          <button onClick={() => { setIsProfileModalOpen(true); setIsOpen(false); }} className="dropdown-item" style={{ outline: 'none', border: 'none' }}>Mon Profil</button>
+          {user?.role === 'admin' && (
+            <a href="/admin/dashboard/settings" className="dropdown-item">Paramètres</a>
+          )}
+          {user?.role === 'client' && (
+            <a href="/client/dashboard/settings" className="dropdown-item">Paramètres</a>
+          )}
+          {user?.role === 'vendeur' && (
+            <a href="/vendeur/dashboard/settings" className="dropdown-item">Paramètres</a>
+          )}
           <div className="theme">
             <p className="dropdown-item">Thème</p>
             <div className="mode">
@@ -74,6 +83,10 @@ const UserMenu = () => {
           </button>
         </div>
       )}
+
+      <Modal isOpen={isProfileModalOpen} onClose={() => setIsProfileModalOpen(false)}>
+        <UserProfile />
+      </Modal>
     </div>
   );
 };

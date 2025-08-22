@@ -1,0 +1,51 @@
+.user-profile-modal {
+  padding: 20px;
+  text-align: center;
+}
+
+.profile-header {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.profile-role {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  background-color: var(--background-muted);
+  padding: 4px 8px;
+  border-radius: 6px;
+  text-transform: capitalize;
+}
+
+.profile-details {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: var(--background-secondary);
+  border-radius: 8px;
+}
+
+.detail-item strong {
+  margin-right: 10px;
+  color: var(--text-primary);
+}
+
+.detail-item span {
+  color: var(--text-secondary);
+}

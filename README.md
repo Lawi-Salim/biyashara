@@ -85,34 +85,7 @@ Le schéma de la base de données est défini dans `schema-psql.sql`.
 
 ## 🗺️ Roadmap de Développement
 
-### Étape 1 : Initialisation des Dashboards (✅ Terminé)
-- [x] Création des composants de base pour les dashboards (Admin, Vendeur, Client).
-- [x] Mise en place d'un layout commun (`DashboardLayout`).
-- [x] Implémentation d'une barre latérale (`Sidebar`) dynamique affichant les menus en fonction du rôle de l'utilisateur.
-
-### Étape 2 : Développement des Fonctionnalités par Rôle (🚧 En cours)
-
-L'objectif de cette étape est de développer les composants correspondant à chaque lien de la barre latérale pour peupler les différents espaces utilisateurs.
-
-#### Espace Administrateur (`/pages/sidebars/sidebarAdmin`)
-- **Gestion des Utilisateurs**: Créer un composant pour lister, filtrer et modifier les rôles des utilisateurs.
-- **Gestion des Produits**: Créer un composant pour superviser tous les produits publiés sur la plateforme.
-- **Gestion des Commandes**: Créer un composant pour visualiser et gérer toutes les transactions.
-- **Paramètres**: Développer une page pour les configurations globales de l'application.
-
-#### Espace Vendeur (`/pages/sidebars/sidebarVendeur`)
-- **Gestion de "Mes Produits"**: Créer une interface pour que le vendeur puisse ajouter, modifier et supprimer ses propres produits.
-- **Gestion de "Mes Ventes"**: Créer un tableau de bord pour que le vendeur puisse suivre l'état de ses ventes et commandes.
-- **Paramètres de la Boutique**: Développer une page pour que le vendeur puisse configurer les informations de sa boutique.
-
-#### Espace Client (`/pages/sidebars/sidebarClient`)
-- **Gestion de "Mes Commandes"**: Créer une page où le client peut consulter l'historique et le statut de ses commandes.
-- **Paramètres du Compte**: Développer un formulaire permettant au client de mettre à jour ses informations personnelles (nom, adresse, etc.).
-
-### Étape 3 : Intégration et Finalisation (⏳ À venir)
-- Intégration du backend avec les composants frontend.
-- Gestion d'état avancée avec Redux Toolkit.
-- Tests et débogage.
+La roadmap détaillée du projet est disponible dans le fichier [ROADMAP.md](./ROADMAP.md).
 
 ## 🔄 Développement
 

@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../database').sequelize;
 
-const Boutique = sequelize.define('Boutiques', {
+const Boutique = sequelize.define('Boutique', {
     id_boutique: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -30,6 +30,18 @@ const Boutique = sequelize.define('Boutiques', {
         type: DataTypes.STRING(255),
         field: 'banniere_boutique'
     },
+    slug: {
+        type: DataTypes.STRING(150),
+        unique: true,
+        allowNull: false,
+        field: 'slug'
+    },
+    statut: {
+        type: DataTypes.ENUM('active', 'inactive'),
+        defaultValue: 'active',
+        allowNull: false,
+        field: 'statut'
+    },
     id_vendeur: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -56,7 +68,23 @@ const Boutique = sequelize.define('Boutiques', {
     timestamps: false,
 
     hooks: {
+        beforeCreate: (boutique) => {
+            boutique.slug = boutique.nom_boutique.toString().toLowerCase()
+                .replace(/\s+/g, '-')
+                .replace(/[^\w\-]+/g, '')
+                .replace(/\-\-+/g, '-')
+                .replace(/^-+/, '')
+                .replace(/-+$/, '');
+        },
         beforeUpdate: (boutique) => {
+            if (boutique.changed('nom_boutique')) {
+                boutique.slug = boutique.nom_boutique.toString().toLowerCase()
+                    .replace(/\s+/g, '-')
+                    .replace(/[^\w\-]+/g, '')
+                    .replace(/\-\-+/g, '-')
+                    .replace(/^-+/, '')
+                    .replace(/-+$/, '');
+            }
             boutique.updated_at = new Date();
         }
     }

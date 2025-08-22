@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import apiService from '../../../apiService';
 import NoDataFound from '../../../components/common/NoDataFound';
+import ErrorDataFound from '../../../components/common/ErrorDataFound';
 import SpinnerLoading from '../../../components/SpinnerLoading';
 import './styleAdmin.css';
 
 const AdminOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        // const data = await apiService.get('/orders');
+        // const data = await apiService.get('//orders');
         // setOrders(data);
         setOrders([]); // TODO: Remplacer par les données de l'API
       } catch (error) {
         console.error('Erreur lors de la récupération des commandes:', error);
+        setError('Impossible de charger les commandes.');
       } finally {
         setLoading(false);
       }
@@ -33,6 +36,10 @@ const AdminOrders = () => {
             <SpinnerLoading size="large" color='var(--primary-500)' />
             <p>Chargement des commandes...</p>
           </div>
+        </div>
+      ) : error ? (
+        <div className="empty-card">
+          <ErrorDataFound message={error} />
         </div>
       ) : orders.length > 0 ? (
         <table className="admin-table">

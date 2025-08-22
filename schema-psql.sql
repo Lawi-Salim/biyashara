@@ -9,12 +9,17 @@ DROP TABLE IF EXISTS Factures CASCADE;
 DROP TABLE IF EXISTS Ventes CASCADE;
 DROP TABLE IF EXISTS DetailCommandes CASCADE;
 DROP TABLE IF EXISTS Commandes CASCADE;
+DROP TABLE IF EXISTS Stocks CASCADE;
 DROP TABLE IF EXISTS Produits CASCADE;
 DROP TABLE IF EXISTS Boutiques CASCADE;
+DROP TABLE IF EXISTS VendeurCategories CASCADE;
+DROP TABLE IF EXISTS CategorieUnites CASCADE;
 DROP TABLE IF EXISTS Clients CASCADE;
 DROP TABLE IF EXISTS Vendeurs CASCADE;
-DROP TABLE IF EXISTS DevenirVendeurs CASCADE;
 DROP TABLE IF EXISTS Notifications CASCADE;
+DROP TABLE IF EXISTS DevenirVendeurs CASCADE;
+DROP TABLE IF EXISTS Avis CASCADE;
+DROP TABLE IF EXISTS SupportTickets CASCADE;
 DROP TABLE IF EXISTS TypesNotifications CASCADE;
 DROP TABLE IF EXISTS Categories CASCADE;
 DROP TABLE IF EXISTS Unites CASCADE;
@@ -25,7 +30,9 @@ DROP TABLE IF EXISTS EtatStatuts CASCADE;
 DROP TYPE IF EXISTS role_enum CASCADE;
 DROP TYPE IF EXISTS rappel_enum CASCADE;
 DROP TYPE IF EXISTS statut_demande_enum CASCADE;
+DROP TYPE IF EXISTS statut_ticket_enum CASCADE;
 DROP TYPE IF EXISTS mode_paiement_enum CASCADE;
+DROP TYPE IF EXISTS statut_boutique_enum CASCADE;
 
 -- =============================
 -- Types personnalisés
@@ -33,7 +40,9 @@ DROP TYPE IF EXISTS mode_paiement_enum CASCADE;
 CREATE TYPE role_enum AS ENUM ('admin', 'vendeur', 'client');
 CREATE TYPE rappel_enum AS ENUM ('matin', 'soir', 'nuit');
 CREATE TYPE statut_demande_enum AS ENUM ('en_attente', 'valide', 'rejete');
+CREATE TYPE statut_ticket_enum AS ENUM ('ouvert', 'accepté', 'refusé');
 CREATE TYPE mode_paiement_enum AS ENUM ('carte', 'virement', 'espèces');
+CREATE TYPE statut_boutique_enum AS ENUM ('active', 'inactive');
 
 -- =============================
 -- Table EtatStatuts
@@ -69,6 +78,7 @@ CREATE TABLE Vendeurs (
     nationalite VARCHAR(100) NOT NULL,
     id_user INTEGER NOT NULL,
     statut VARCHAR(50) NOT NULL DEFAULT 'pending',
+    categories_verrouillees BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (id_user) REFERENCES Utilisateurs(id_user) ON DELETE CASCADE
 );
 
@@ -82,6 +92,8 @@ CREATE TABLE Boutiques (
     banniere_boutique VARCHAR(255),
     description TEXT,
     adresse_boutique VARCHAR(255) NOT NULL,
+    slug VARCHAR(150) NOT NULL UNIQUE,
+    statut statut_boutique_enum NOT NULL DEFAULT 'active',
     id_vendeur INTEGER NOT NULL UNIQUE, -- 1 vendeur = 1 boutique
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -104,7 +116,24 @@ CREATE TABLE Clients (
 -- =============================
 CREATE TABLE Categories (
     id_categorie SERIAL PRIMARY KEY,
-    nom VARCHAR(100) NOT NULL UNIQUE
+    nom VARCHAR(100) NOT NULL UNIQUE,
+    parent_id INTEGER,
+    niveau INTEGER NOT NULL DEFAULT 1,
+    ordre_affichage INTEGER NOT NULL DEFAULT 1,
+    FOREIGN KEY (parent_id) REFERENCES Categories(id_categorie) ON DELETE CASCADE
+);
+
+-- =============================
+-- Table VendeurCategories (Préférences catégories par vendeur)
+-- =============================
+CREATE TABLE VendeurCategories (
+    id SERIAL PRIMARY KEY,
+    id_vendeur INTEGER NOT NULL,
+    id_categorie INTEGER NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_vendeur) REFERENCES Vendeurs(id_vendeur) ON DELETE CASCADE,
+    FOREIGN KEY (id_categorie) REFERENCES Categories(id_categorie) ON DELETE CASCADE,
+    UNIQUE(id_vendeur, id_categorie)
 );
 
 -- =============================
@@ -117,6 +146,19 @@ CREATE TABLE Unites (
 );
 
 -- =============================
+-- Table CategorieUnites (Association Unités / Catégories)
+-- =============================
+CREATE TABLE CategorieUnites (
+    id SERIAL PRIMARY KEY,
+    id_categorie INTEGER NOT NULL,
+    id_unite INTEGER NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_categorie) REFERENCES Categories(id_categorie) ON DELETE CASCADE,
+    FOREIGN KEY (id_unite) REFERENCES Unites(id_unite) ON DELETE CASCADE,
+    UNIQUE(id_categorie, id_unite)
+);
+
+-- =============================
 -- Table Produits
 -- =============================
 CREATE TABLE Produits (
@@ -124,9 +166,7 @@ CREATE TABLE Produits (
     nom VARCHAR(100) NOT NULL,
     image VARCHAR(255) DEFAULT 'default.jpg',
     description TEXT,
-    prix_unite DECIMAL(10,2) NOT NULL DEFAULT 0,
-    seuil_alerte INTEGER NOT NULL DEFAULT 10,
-    seuil_critique INTEGER NOT NULL DEFAULT 5,
+    prix_unite DECIMAL(10, 2) NOT NULL DEFAULT 0,
     vues INTEGER DEFAULT 0,
     ventes INTEGER DEFAULT 0,
     id_categorie INTEGER,
@@ -137,6 +177,20 @@ CREATE TABLE Produits (
     FOREIGN KEY (id_categorie) REFERENCES Categories(id_categorie) ON DELETE SET NULL,
     FOREIGN KEY (id_unite) REFERENCES Unites(id_unite) ON DELETE SET NULL,
     FOREIGN KEY (id_vendeur) REFERENCES Vendeurs(id_vendeur) ON DELETE CASCADE
+);
+
+-- =============================
+-- Table Stocks
+-- =============================
+CREATE TABLE Stocks (
+    id_stock SERIAL PRIMARY KEY,
+    quantite INTEGER NOT NULL DEFAULT 0,
+    seuil_alerte INTEGER NOT NULL DEFAULT 10,
+    seuil_critique INTEGER NOT NULL DEFAULT 5,
+    id_produit INTEGER NOT NULL UNIQUE, -- 1 produit = 1 ligne de stock
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_produit) REFERENCES Produits(id_produit) ON DELETE CASCADE
 );
 
 -- =============================
@@ -236,21 +290,6 @@ CREATE TABLE TypesNotifications (
 );
 
 -- =============================
--- Table Notifications
--- =============================
-CREATE TABLE Notifications (
-    id_notif SERIAL PRIMARY KEY,
-    message TEXT,
-    notif_lu BOOLEAN DEFAULT FALSE,
-    id_user INTEGER NOT NULL,
-    id_type_notif INTEGER NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_user) REFERENCES Utilisateurs(id_user) ON DELETE CASCADE,
-    FOREIGN KEY (id_type_notif) REFERENCES TypesNotifications(id_type_notif)
-);
-
--- =============================
 -- Table DevenirVendeurs
 -- =============================
 CREATE TABLE DevenirVendeurs (
@@ -268,7 +307,52 @@ CREATE TABLE DevenirVendeurs (
     FOREIGN KEY (id_user) REFERENCES Utilisateurs(id_user) ON DELETE SET NULL
 );
 
--- Fin du script
+-- =============================
+-- Table SupportTickets
+-- =============================
+CREATE TABLE SupportTickets (
+    id_support_ticket SERIAL PRIMARY KEY,
+    vendeur_id INTEGER NOT NULL REFERENCES Vendeurs(id_vendeur) ON DELETE CASCADE,
+    raison TEXT NOT NULL,
+    status statut_ticket_enum NOT NULL DEFAULT 'ouvert',
+    admin_id INTEGER REFERENCES Utilisateurs(id_user) ON DELETE SET NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- =============================
+-- Table Notifications
+-- =============================
+CREATE TABLE Notifications (
+    id_notif SERIAL PRIMARY KEY,
+    message TEXT,
+    notif_lu BOOLEAN DEFAULT FALSE,
+    id_user INTEGER NOT NULL,
+    id_type_notif INTEGER NOT NULL,
+    id_devenirvendeur INTEGER,
+    id_support_ticket INTEGER,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_user) REFERENCES Utilisateurs(id_user) ON DELETE CASCADE,
+    FOREIGN KEY (id_type_notif) REFERENCES TypesNotifications(id_type_notif),
+    FOREIGN KEY (id_devenirvendeur) REFERENCES DevenirVendeurs(id_devenirvendeur) ON DELETE CASCADE,
+    FOREIGN KEY (id_support_ticket) REFERENCES SupportTickets(id_support_ticket) ON DELETE CASCADE
+);
+
+-- =============================
+-- Table Avis
+-- =============================
+CREATE TABLE Avis (
+    id_avis SERIAL PRIMARY KEY,
+    note INTEGER NOT NULL CHECK (note >= 1 AND note <= 5),
+    commentaire TEXT,
+    id_user INTEGER NOT NULL,
+    id_boutique INTEGER NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_user) REFERENCES Utilisateurs(id_user) ON DELETE CASCADE,
+    FOREIGN KEY (id_boutique) REFERENCES Boutiques(id_boutique) ON DELETE CASCADE
+);
 
 -- =============================
 -- Fonction pour mettre à jour automatiquement updated_at
@@ -322,4 +406,16 @@ FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 CREATE TRIGGER update_notifications_updated_at
 BEFORE UPDATE ON Notifications
+FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_stocks_updated_at
+BEFORE UPDATE ON Stocks
+FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_supporttickets_updated_at
+BEFORE UPDATE ON SupportTickets
+FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER update_avis_updated_at
+BEFORE UPDATE ON Avis
 FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();

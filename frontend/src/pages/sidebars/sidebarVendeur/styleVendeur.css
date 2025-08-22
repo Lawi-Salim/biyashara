@@ -24,7 +24,7 @@
   padding: 0.6rem 1.2rem;
   border: none;
   border-radius: 6px;
-  font-size: 0.95rem;
+  font-size: var(--button-size);
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -65,16 +65,13 @@ html.dark .vendeur-table thead tr {
   font-weight: 600;
   color: #4b5563;
   text-transform: uppercase;
-  font-size: 0.85rem;
+  font-size: var(--h6-size);
 }
 
 html.dark .vendeur-table th {
   color: var(--text-primary);
 }
 
-.vendeur-table tbody tr:hover {
-  background-color: var(--gray-50);
-}
 
 .status--validé {
   color: var(--green-500);
@@ -84,6 +81,18 @@ html.dark .vendeur-table th {
 .status--en-attente {
   color: var(--yellow-500);
   font-weight: bold;
+}
+
+/* Hide arrows from number input */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 .status--rejeté {
@@ -97,7 +106,7 @@ html.dark .vendeur-table th {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: var(--button-size);
   margin-right: 0.5rem;
   transition: all 0.3s ease;
   color: white;
@@ -121,7 +130,7 @@ html.dark .vendeur-table th {
 
 .loading-container p {
   margin-top: 1rem;
-  font-size: 1.1rem;
+  font-size: var(--h4-size);
   color: var(--text-secondary);
 }
 
@@ -132,4 +141,162 @@ html.dark .vendeur-table th {
   text-align: center;
   box-shadow: var(--shadow-md);
   margin-top: 1rem;
+}
+
+/* Styles pour le formulaire de produit dans le Modal */
+.product-form h2 {
+  font-size: var(--h3-size);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: -0.5rem 0 1rem 0;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.product-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.2rem;
+}
+
+.form-group.span-2 {
+  grid-column: span 2;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: var(--h6-size);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: var(--input-size);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 2px var(--primary-500-translucent);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 75px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.btn-cancel,
+.btn-submit {
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: var(--button-size);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-cancel {
+  background-color: var(--gray-200);
+  color: var(--text-primary);
+}
+
+.btn-cancel:hover {
+  background-color: var(--gray-300);
+}
+
+html.dark .btn-cancel {
+  background-color: var(--gray-600);
+  color: var(--gray-200);
+}
+
+html.dark .btn-cancel:hover {
+  background-color: var(--gray-500);
+}
+
+.btn-submit {
+  background-color: var(--primary-500);
+  color: white;
+}
+
+.btn-submit:hover {
+  background-color: var(--primary-600);
+}
+
+/* === Actions & Filters === */
+.filter-select {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  font-size: var(--input-size);
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  -webkit-appearance: none; /* Removes default browser styling */
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem; /* Make space for the arrow */
+}
+
+/* Dark mode arrow */
+html.dark .filter-select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+.filter-select option {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.notification-unread {
+  background-color: var(--primary-100);
+}
+
+.notification-unread td {
+  color: var(--neutral-800) !important; /* Forcer la couleur du texte */
+}
+
+html.dark .notification-unread {
+  background-color: var(--primary-200);
+}
+
+html.dark .notification-unread td {
+  color: var(--neutral-900) !important; /* Forcer la couleur du texte en mode sombre */
 }

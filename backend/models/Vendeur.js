@@ -27,6 +27,12 @@ const Vendeur = sequelize.define('Vendeur', {
         allowNull: false,
         defaultValue: 'pending',
         field: 'statut'
+    },
+    categories_verrouillees: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+        field: 'categories_verrouillees'
     }
 }, {
     tableName: 'vendeurs',

@@ -28,18 +28,6 @@ const Produit = sequelize.define('Produit', {
         defaultValue: 0,
         field: 'prix_unite'
     },
-    seuil_alerte: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        defaultValue: 10,
-        field: 'seuil_alerte'
-    },
-    seuil_critique: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        defaultValue: 5,
-        field: 'seuil_critique'
-    },
     vues: {
         type: DataTypes.INTEGER,
         defaultValue: 0,

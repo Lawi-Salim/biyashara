@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import apiService from '../../../apiService';
 import NoDataFound from '../../../components/common/NoDataFound';
+import ErrorDataFound from '../../../components/common/ErrorDataFound';
 import SpinnerLoading from '../../../components/SpinnerLoading';
 import './styleAdmin.css';
 
 const AdminUsers = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        // const data = await apiService.get('/users');
-        // setUsers(data);
-        setUsers([]); // TODO: Remplacer par les données de l'API
+        const data = await apiService.get('/admin/users');
+        setUsers(data);
+        // setUsers([]); // TODO: Remplacer par les données de l'API
       } catch (error) {
         console.error('Erreur lors de la récupération des utilisateurs:', error);
+        setError('Impossible de charger les utilisateurs.');
       } finally {
         setLoading(false);
       }
@@ -33,6 +36,10 @@ const AdminUsers = () => {
             <SpinnerLoading size="large" color='var(--primary-500)' />
             <p>Chargement des utilisateurs...</p>
           </div>
+        </div>
+      ) : error ? (
+        <div className="empty-card">
+          <ErrorDataFound message={error} />
         </div>
       ) : users.length > 0 ? (
         <table className="admin-table">

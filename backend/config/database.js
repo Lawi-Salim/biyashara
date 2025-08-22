@@ -10,22 +10,10 @@ module.exports = {
     host: process.env.DB_HOST || '127.0.0.1',
     port: process.env.DB_PORT || 5432,
     dialect: 'postgres',
-    logging: false, // Désactive les logs SQL détaillés
-    define: {
-      charset: 'utf8mb4',
-      collate: 'utf8mb4_unicode_ci',
-      timestamps: false
-    },
+    logging: false, 
     dialectOptions: {
       useUTC: false,
-      client_encoding: 'UTF8',
-      charset: 'utf8mb4',
-      collate: 'utf8mb4_unicode_ci'
-    },
-    // Forcer l'encodage du client
-    define: {
-      charset: 'utf8mb4',
-      collate: 'utf8mb4_unicode_ci'
+      client_encoding: 'UTF8'
     },
     pool: {
       max: 5,

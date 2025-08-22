@@ -36,6 +36,26 @@ const Notification = sequelize.define('Notification', {
             key: 'id_type_notif'
         }
     },
+    id_devenirvendeur: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        field: 'id_devenirvendeur',
+        references: {
+            model: 'devenirvendeurs',
+            key: 'id_devenirvendeur'
+        },
+        onDelete: 'CASCADE'
+    },
+    id_support_ticket: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        field: 'id_support_ticket',
+        references: {
+            model: 'supporttickets',
+            key: 'id'
+        },
+        onDelete: 'CASCADE'
+    },
     created_at: {
         type: DataTypes.DATE,
         allowNull: false,

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Crée une instance d'Axios avec une configuration de base
 const apiService = axios.create({
-  baseURL: process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000',
+  baseURL: process.env.NODE_ENV === 'production' ? '/api/v1' : 'http://localhost:5000/api/v1',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -37,5 +37,10 @@ apiService.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+// Fonction pour récupérer les unités par catégories
+export const getUnitesByCategories = (categorieIds) => {
+  return apiService.post('/unites/by-categories', { categorieIds });
+};
 
 export default apiService;

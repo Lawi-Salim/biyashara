@@ -3,6 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
 import NoDataFound from '../../components/common/NoDataFound';
+import ErrorDataFound from '../../components/common/ErrorDataFound';
 import UserAvatar from './UserAvatar';
 import apiService from '../../apiService';
 import SpinnerLoading from '../../components/SpinnerLoading';
@@ -16,6 +17,7 @@ const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
   const [sellerRequests, setSellerRequests] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -23,13 +25,14 @@ const AdminDashboard = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const usersResponse = await apiService.get('/api/admin/users');
+        const usersResponse = await apiService.get('/admin/users');
         setUsers(usersResponse.data);
 
-        const requestsResponse = await apiService.get('/api/admin/seller-requests');
+        const requestsResponse = await apiService.get('/admin/seller-requests');
         setSellerRequests(requestsResponse.data);
 
       } catch (err) {
+        setError('Impossible de charger les données du tableau de bord.');
         addToast('Impossible de charger les données du tableau de bord.', 'error');
       } finally {
         setLoading(false);
@@ -41,11 +44,11 @@ const AdminDashboard = () => {
 
   const handleRequest = async (requestId, action) => {
     try {
-      await apiService.post(`/api/admin/seller-requests/${requestId}`, { action });
+      await apiService.post(`/admin/seller-requests/${requestId}`, { action });
       setSellerRequests(sellerRequests.filter(req => req.id_devenirvendeur !== requestId));
       addToast(`La demande a été ${action === 'approve' ? 'approuvée' : 'rejetée'}.`, 'success');
       if (action === 'approve') {
-        const usersResponse = await apiService.get('/api/admin/users');
+        const usersResponse = await apiService.get('/admin/users');
         setUsers(usersResponse.data);
       }
     } catch (err) {
@@ -75,7 +78,11 @@ const AdminDashboard = () => {
             <h1>Tableau de bord Administrateur</h1>
           </header>
 
-          {loading ? <SpinnerLoading /> : (
+          {loading ? (
+            <SpinnerLoading />
+          ) : error ? (
+            <ErrorDataFound message={error} />
+          ) : (
             <>
               <div className="dashboard-card">
                 <h2>Liste des utilisateurs</h2>

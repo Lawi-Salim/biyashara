@@ -3,10 +3,19 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const path = require('path');
 
 // Importation des routes
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
+const notificationRoutes = require('./routes/notification');
+const produitRoutes = require('./routes/produitRoutes');
+const categorieRoutes = require('./routes/categorieRoutes');
+const uniteRoutes = require('./routes/uniteRoutes');
+const boutiqueRoutes = require('./routes/boutiqueRoutes');
+const vendeurCategoriesRoutes = require('./routes/vendeurCategories');
+const supportRoutes = require('./routes/support');
+const adminSupportRoutes = require('./routes/adminSupport');
 
 // Initialisation de l'application Express
 const app = express();
@@ -17,10 +26,13 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
-app.use(helmet());
+app.use(helmet({ crossOriginResourcePolicy: { policy: "cross-origin" } }));
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Servir les fichiers statiques (logos, bannières, etc.)
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Log minimal de chaque requête pour debug serverless
 app.use((req, res, next) => {
@@ -29,11 +41,34 @@ app.use((req, res, next) => {
 });
 
 // Routes (supporte avec ou sans préfixe "/api" selon le routage Vercel)
-app.use(['/api/auth', '/auth'], authRoutes);
-app.use(['/api/admin', '/admin'], adminRoutes);
+app.use('/api/v1/auth', authRoutes);
+app.use('/auth', authRoutes);
+app.use('/api/v1/admin', adminRoutes);
+app.use('/admin', adminRoutes);
+app.use('/api/v1/notifications', notificationRoutes);
+app.use('/notifications', notificationRoutes);
+app.use('/api/v1/produits', produitRoutes);
+app.use('/produits', produitRoutes);
+app.use('/api/v1/categories', categorieRoutes);
+app.use('/categories', categorieRoutes);
+app.use('/api/v1/unites', uniteRoutes);
+app.use('/unites', uniteRoutes);
+app.use('/api/v1/boutiques', boutiqueRoutes);
+app.use('/boutiques', boutiqueRoutes);
+app.use('/api/v1/vendeur-categories', vendeurCategoriesRoutes);
+app.use('/vendeur-categories', vendeurCategoriesRoutes);
+
+// Routes pour le support
+app.use('/api/v1/support', supportRoutes);
+app.use('/support', supportRoutes);
+app.use('/api/v1/admin/support', adminSupportRoutes);
+app.use('/admin/support', adminSupportRoutes);
 
 // Endpoint de santé pour diagnostic
-app.get(['/api/health', '/health'], (req, res) => {
+app.get('/api/health', (req, res) => {
+  res.json({ ok: true, time: new Date().toISOString() });
+});
+app.get('/health', (req, res) => {
   res.json({ ok: true, time: new Date().toISOString() });
 });
 

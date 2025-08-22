@@ -32,7 +32,7 @@ const Register = () => {
     setLoading(true);
     try {
       const { confirmPassword, ...dataToSend } = formData;
-      await apiService.post('/api/auth/register', dataToSend);
+      await apiService.post('auth/register', dataToSend);
       addToast('Inscription réussie ! Vous pouvez maintenant vous connecter.', 'success');
       setTimeout(() => {
         navigate('/login');

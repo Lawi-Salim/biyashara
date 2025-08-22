@@ -1,0 +1,96 @@
+.admin-support-container {
+  padding: 2rem;
+}
+
+.admin-support-container h4 {
+  margin-bottom: 1rem;
+}
+
+.filters-bar {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.filter-group label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.filter-group select {
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
+.tickets-list {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.ticket-card {
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+  border-left: 5px solid;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.ticket-card.status-ouvert { border-color: var(--warning-color); }
+.ticket-card.status-accepté { border-color: var(--success-color); }
+.ticket-card.status-refusé { border-color: var(--error-color); }
+
+.ticket-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.ticket-shop-name {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.ticket-status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.ticket-status-badge.status-ouvert { background-color: var(--warning-color-bg); color: var(--warning-color); }
+.ticket-status-badge.status-accepté { background-color: var(--success-color-bg); color: var(--success-color); }
+.ticket-status-badge.status-refusé { background-color: var(--error-color-bg); color: var(--error-color); }
+
+.ticket-body p {
+  margin: 0.5rem 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.ticket-footer {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-tertiary);
+}
+
+.ticket-actions {
+  display: flex;
+  gap: 0.75rem;
+}

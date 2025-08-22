@@ -1,0 +1,129 @@
+.boutiques-list-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: auto;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.boutiques-list-container h1 {
+    font-size: var(--h2-size);
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.boutiques-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.boutique-card {
+  background-color: var(--bg-secondary);
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.boutique-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+.boutique-card-banner {
+  height: 150px;
+  width: 100%;
+}
+
+.boutique-card-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.boutique-card-content {
+  padding: 1rem;
+  position: relative;
+  flex-grow: 1;
+  padding-top: 50px; /* Space for the logo */
+  display: flex;
+  flex-direction: column;
+}
+
+.boutique-card-logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: absolute;
+  top: -40px; /* Half of height to overlap */
+  left: 1rem;
+  border: 4px solid var(--bg-secondary);
+  background-color: var(--bg-secondary);
+}
+
+.boutique-card-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.boutique-card h3 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.25rem;
+  color: var(--text-primary);
+  font-size: 1.25rem;
+}
+
+.boutique-card-category,
+.boutique-card-rating,
+.boutique-card-products,
+.boutique-card-visit {
+  display: block; /* S'assurer que la catégorie est visible */
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+
+.boutique-card-footer {
+  margin-top: auto; /* Pousse le pied de page en bas */
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.boutique-card-button {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 0.75rem;
+  background-color: var(--primary-color-light);
+  color: var(--primary-color);
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.boutique-card:hover .boutique-card-button {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.card-empty {
+  background-color: var(--bg-secondary);
+  border: 1px dashed var(--border-color);
+  border-radius: 12px;
+  padding: 4rem 2rem;
+  text-align: center;
+  margin-top: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}

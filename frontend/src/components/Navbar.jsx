@@ -48,8 +48,7 @@ const Navbar = () => {
         {/* Navigation Links & Auth for Mobile */}
         <div className={`navbar-menu ${isMenuOpen ? 'active' : ''}`}>
           <a href="/" className="navbar-link">Accueil</a>
-          <a href="/products" className="navbar-link">Produits</a>
-          <a href="/categories" className="navbar-link">Catégories</a>
+          <a href="/boutiques" className="navbar-link">Boutiques</a>
           {/* Auth Buttons inside menu */}
           <div className="navbar-auth">
             <Link to="/login" className="btn-login">Connexion</Link>

@@ -13,6 +13,7 @@ const RegisterSeller = () => {
     password: '',
     confirmPassword: '',
     telephone: '',
+    nationalite: '',
     nom_boutique: '',
     description_boutique: ''
   });
@@ -27,19 +28,36 @@ const RegisterSeller = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return; // Empêche les soumissions multiples
+    console.log('Début de handleSubmit');
+
     if (formData.password !== formData.confirmPassword) {
       addToast('Les mots de passe ne correspondent pas.', 'error');
+      console.log('Erreur: Les mots de passe ne correspondent pas.');
       return;
     }
+
+    if (formData.password.length < 8) {
+      addToast('Le mot de passe doit contenir au moins 8 caractères.', 'error');
+      return;
+    }
+
     setLoading(true);
+    console.log('Envoi de la demande avec les données:', formData);
+
     try {
-      const { confirmPassword, ...dataToSend } = formData;
-      await apiService.post('/api/auth/register-seller-request', dataToSend);
+      // Préparer les données pour l'envoi : sans confirmPassword et avec le téléphone formaté
+      const { confirmPassword, ...submissionData } = formData;
+      submissionData.telephone = submissionData.telephone.replace(/\s/g, ''); // Supprimer les espaces
+
+      const response = await apiService.post('/auth/register-seller-request', submissionData);
       addToast('Demande envoyée ! Vous recevrez une réponse après examen.', 'success');
+      console.log('Demande envoyée avec succès.');
       setTimeout(() => {
         navigate('/');
       }, 3000);
     } catch (err) {
+      console.error('Erreur lors de l\'envoi de la demande:', err);
       addToast(err.response?.data?.message || 'Une erreur s\'est produite.', 'error');
     }
     setLoading(false);
@@ -75,21 +93,28 @@ const RegisterSeller = () => {
 
           <div className="form-row">
             <div className="form-group">
+              <label htmlFor="nationalite">Nationalité</label>
+              <input type="text" id="nationalite" name="nationalite" value={formData.nationalite} onChange={handleChange} placeholder="France" required />
+            </div>
+
+            <div className="form-group">
               <label htmlFor="telephone">Téléphone</label>
               <input type="tel" id="telephone" name="telephone" value={formData.telephone} onChange={handleChange} placeholder="+33 6 12 34 56 78" required />
             </div>
+          </div>
 
+          <div className="form-row">
             <div className="form-group">
               <label htmlFor="nom_boutique">Nom de la boutique</label>
               <input type="text" id="nom_boutique" name="nom_boutique" value={formData.nom_boutique} onChange={handleChange} placeholder="Ma Super Boutique" required />
             </div>
-          </div>
 
-          <div className="form-group form-group-full-width">
-            <label htmlFor="description_boutique">Description de la boutique</label>
-            <textarea id="description_boutique" name="description_boutique" value={formData.description_boutique} onChange={handleChange} rows="3" placeholder="Décrivez brièvement votre boutique et les produits que vous vendez."></textarea>
+            <div className="form-group form-group-full-width">
+              <label htmlFor="description_boutique">Description de la boutique</label>
+              <textarea id="description_boutique" name="description_boutique" value={formData.description_boutique} onChange={handleChange} rows="3" placeholder="Décrivez brièvement votre boutique et les produits que vous vendez."></textarea>
+            </div>
           </div>
-
+          
           <div className="form-row">
             <div className="form-group">
               <label htmlFor="password">Mot de passe</label>

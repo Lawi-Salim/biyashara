@@ -71,6 +71,63 @@
   text-decoration: underline;
 }
 
+.notification-unread {
+  font-weight: bold;
+  background-color: #f0f8ff; /* AliceBlue, une couleur claire pour la distinction */
+}
+
+/* Styles pour le contenu de la modale de notification */
+.notification-modal-content {
+  padding: 1rem;
+}
+
+.modal-subtitle {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  color: var(--text-color-light);
+  border-bottom: 1px solid var(--border-color-light);
+  padding-bottom: 0.5rem;
+}
+
+.notification-section,
+.request-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem; 
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.detail-label {
+  font-weight: bold;
+  color: var(--text-color-light);
+  margin-right: 1rem;
+}
+
+.detail-value {
+  color: var(--text-color);
+  text-align: right;
+}
+
+.section-divider {
+  border: 0;
+  border-top: 1px solid var(--border-color-light);
+  margin: 1.5rem 0;
+}
+
+.modal-actions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
 .auth-header {
   margin-bottom: 1.5rem;
 }
@@ -124,9 +181,9 @@
   gap: 1rem;
 }
 
-.form-group-full-width {
+/* .form-group-full-width {
   grid-column: 1 / -1;
-}
+} */
 
 .password-toggle {
   position: absolute;

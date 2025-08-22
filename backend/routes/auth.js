@@ -1,6 +1,6 @@
 const express = require('express');
 const { check } = require('express-validator');
-const { login, register, getProfile, updateProfile, registerSellerRequest } = require('../controllers/authController');
+const { login, register, getProfile, getUserProfile, updateProfile, registerSellerRequest } = require('../controllers/authController');
 const { auth } = require('../middleware/auth');
 
 const router = express.Router();
@@ -35,6 +35,11 @@ router.post(
 // @access  Privé
 router.get('/me', auth, getProfile);
 
+// @route   GET /api/auth/profile
+// @desc    Obtenir le profil détaillé de l'utilisateur connecté
+// @access  Privé
+router.get('/profile', auth, getUserProfile);
+
 // @route   PUT /api/auth/me
 // @desc    Mettre à jour le profil de l'utilisateur connecté
 // @access  Privé
@@ -44,7 +49,16 @@ router.put(
     auth,
     check('nom', 'Le nom est requis').optional().not().isEmpty(),
     check('email', 'Veuillez fournir un email valide').optional().isEmail(),
-    check('telephone', 'Numéro de téléphone invalide').optional().isMobilePhone()
+    check('telephone', 'Numéro de téléphone invalide').optional().isMobilePhone(),
+    // Champs sensibles (optionnels) pour la mise à jour sécurisée
+    check('currentPassword', 'Le mot de passe actuel doit contenir au moins 6 caractères').optional().isLength({ min: 6 }),
+    check('newPassword', 'Le nouveau mot de passe doit contenir au moins 6 caractères').optional().isLength({ min: 6 }),
+    check('confirmPassword').optional().custom((value, { req }) => {
+      if (req.body.newPassword && value !== req.body.newPassword) {
+        throw new Error('Les mots de passe ne correspondent pas');
+      }
+      return true;
+    })
   ],
   updateProfile
 );
